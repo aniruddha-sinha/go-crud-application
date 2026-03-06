@@ -5,7 +5,6 @@ package cmd
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"log"
 	"time"
@@ -16,12 +15,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var id int
+var name, email string
 
-// getUserCmd represents the getUser command
-var getUserCmd = &cobra.Command{
-	Use:   "getUser",
-	Short: "Get User by ID",
+// insertCmd represents the insert command
+var insertCmd = &cobra.Command{
+	Use:   "insert",
+	Short: "Insert user by name and email",
 	Run: func(cmd *cobra.Command, args []string) {
 		//load zshrc vars
 		cfg := config.LoadConfig()
@@ -41,24 +40,27 @@ var getUserCmd = &cobra.Command{
 		ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 		defer cancel() //call cancel to release resources
 
-		user, err := userStore.GetUser(ctx, id)
+		id, err := userStore.CreateUser(ctx, name, email)
 		if err != nil {
-			log.Fatal(err)
+			log.Fatalf("Error creating User %v\n", err)
 		}
-		jsonData, err := json.Marshal(user)
-		if err != nil {
-			log.Fatal(err)
-		}
-		fmt.Println("Json data to Json string", string(jsonData))
+
+		fmt.Printf("Successfully created user with ID: %d\n", id)
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(getUserCmd)
-	getUserCmd.Flags().IntVarP(&id, "user-id", "", 0, "user id of the user")
+	rootCmd.AddCommand(insertCmd)
 
-	//* mark flag required
-	if err := getUserCmd.MarkFlagRequired("user-id"); err != nil {
+	insertCmd.Flags().StringVarP(&name, "user-name", "", "", "user\\'s name")
+	insertCmd.Flags().StringVarP(&email, "email-id", "", "", "user\\'s email ID")
+
+	if err := insertCmd.MarkFlagRequired("user-name"); err != nil {
 		log.Fatal(err)
 	}
+
+	if err := insertCmd.MarkFlagRequired("email-id"); err != nil {
+		log.Fatal(err)
+	}
+
 }
