@@ -1,1 +1,1 @@
-![build](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
+![Build Status](https://github.com/aniruddha-sinha/go-crud-application/actions/workflows/release.yml/badge.svg?branch=main)
