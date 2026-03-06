@@ -12,8 +12,8 @@ builds:
     goarch:
       - amd64
       - arm64
-    main: ./cmd/api/main.go # Path to your Cobra entry point
-    binary: my-cobra-app
+    main: main.go # Path to your Cobra entry point
+    binary: go-crud-app-cobra
 
 archives:
   - format: tar.gz
