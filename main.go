@@ -1,6 +1,6 @@
-/*
-Copyright © 2026 NAME HERE <EMAIL ADDRESS>
-*/
+/**
+**	Aniruddha Sinha
+**/
 package main
 
 import (
