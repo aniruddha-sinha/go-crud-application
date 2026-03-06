@@ -2,6 +2,8 @@ name: Release Binaries
 
 on:
   push:
+    branches:
+      - main
     tags:
       - 'v*' # Trigger only when you push a version tag like v1.0.0
 
